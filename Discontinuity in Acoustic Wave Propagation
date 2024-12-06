@@ -1,1 +1,25 @@
+clear;close all;clc
+close all;
+ data2 = readtable('piezo_cleaned-2.xlsx');
+  data1 = readtable('piezo.1-without angle.xlsx');
+ data3 = readtable('piezo_cleaned_3.xlsx');
+x_1=data3{:,1};
+x_2=data3{:,2};
+p=100;
+h=ones(1,p)/p;
+x_3=conv(x_2,h,'same');
+X_3=abs(fft(x_3));
+v=30;
+x_4=x_3(1:v:end);
+X_4=abs(fft(x_4));
+fs=1/(x_1(v,1)-x_1(1,1));
+N=numel(x_4);
+k=0:N-1;
+k=k/N;
+F=k*fs;
 
+plot(x_2)
+figure
+plot(x_4)
+figure
+plot(F,X_4)
